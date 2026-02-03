@@ -26,9 +26,8 @@ credentials/
 !backend/rules/*.json
 !backend/rules/**/*.json
 
-# Large knowledge files (keep processed, exclude raw)
+# Large knowledge files (only exclude raw videos)
 knowledge/raw/
-knowledge/vectors/
 
 # Logs
 *.log
