@@ -206,6 +206,13 @@
       "severity": "大凶"
     },
     {
+      "id": "taiyin_huaji_fumu",
+      "description": "太陰化忌在父母宮",
+      "effect": "與母親感情特別好，母親會為命主操心煩惱",
+      "severity": "中性",
+      "notes": "倪師原話：太陰化忌代表媽媽與她感情特別好，會為她煩惱。並非緣薄之意。"
+    },
+    {
       "id": "huaji_fumu_riyue_fanbei",
       "description": "化忌在父母宮+日月反背格",
       "effect": "1、父母不在身邊；2、父母雙亡",
