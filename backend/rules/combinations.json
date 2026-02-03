@@ -210,6 +210,22 @@
       "type": "大吉"
     },
     {
+      "id": "dijie_dushou_huaji_chong",
+      "stars": ["地劫", "化忌"],
+      "effect": "早年就完了",
+      "condition": "地劫獨守+對面化忌來沖",
+      "type": "大凶",
+      "notes": "倪師說明：如果地劫對面有化忌來沖，那就是早年就完了"
+    },
+    {
+      "id": "taiyin_wenqu_wenchang_nvming",
+      "stars": ["太陰", "文曲", "文昌"],
+      "effect": "女孩子有桃花",
+      "condition": "入命（女命）",
+      "type": "中性",
+      "notes": "倪師原話：女孩子有太陰+文曲+文昌，就叫做女孩子有桃花"
+    },
+    {
       "id": "huaquan_lucun",
       "stars": ["化權", "祿存"],
       "effect": "權祿在財帛宮相逢，一定會自己做事業當老闆",

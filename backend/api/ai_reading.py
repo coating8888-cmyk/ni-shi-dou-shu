@@ -78,6 +78,8 @@ def load_knowledge_base() -> str:
         "palace_analysis_criteria.json", # 十二宮分析要點
         "huaji_rules.json",            # 化忌規則
         "case_studies.json",           # 批命案例
+        "dayun_liuyuan.json",          # 大運流年批法
+        "ni_shi_quotes.json",          # 倪師原話語錄
     ]
 
     for filename in rule_files:
