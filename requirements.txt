@@ -1,0 +1,31 @@
+# Google Drive API
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+
+# 文件處理
+PyPDF2
+pdfplumber
+python-docx
+
+# 影片處理（語音轉文字）
+openai-whisper
+yt-dlp
+
+# AI / 向量資料庫
+openai
+anthropic
+langchain
+langchain-openai
+chromadb
+tiktoken
+
+# Web 框架
+fastapi
+uvicorn
+python-multipart
+
+# 工具
+python-dotenv
+pydantic
+requests

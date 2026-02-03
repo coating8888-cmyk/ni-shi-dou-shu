@@ -1,0 +1,295 @@
+{
+  "星曜組合": [
+    {
+      "id": "lianzhen_qisha",
+      "stars": ["廉貞", "七殺"],
+      "effect": "半路埋屍體",
+      "condition": "同宮",
+      "severity": "凶",
+      "remedy": "杀星庙旺代表凶處藏吉"
+    },
+    {
+      "id": "lianzhen_pojun",
+      "stars": ["廉貞", "破軍"],
+      "effect": "水中做墳墓",
+      "condition": "同宮或在卯酉宮會合",
+      "severity": "凶",
+      "face_sign": "鼻子上有相反的括號紋路",
+      "remedy": null
+    },
+    {
+      "id": "lianzhen_tanlang_xian",
+      "stars": ["廉貞陷", "貪狼陷"],
+      "effect": "夭折、橫折（先天的疾病或自殺）",
+      "condition": "同宮且落陷",
+      "severity": "大凶",
+      "remedy": null
+    },
+    {
+      "id": "wuqu_qisha",
+      "stars": ["武曲", "七殺"],
+      "effect": {
+        "general": "個性剛強、不靠祖業、離祖、到異鄉發跡",
+        "male": "武職大利，商人勞多功少",
+        "female": "一輩子孤獨，面大骨粗、住西北角的臥房一輩子不結婚"
+      },
+      "condition": "同宮",
+      "severity": "中性（看性別）"
+    },
+    {
+      "id": "wuqu_pojun",
+      "stars": ["武曲", "破軍"],
+      "effect": "權力欲望很重，將星得地",
+      "condition": "入命",
+      "gender_effect": {
+        "male": "最好",
+        "female": "個性剛直，容易被人利用"
+      }
+    },
+    {
+      "id": "ziwei_zuofu_youbi",
+      "stars": ["紫微", "左輔", "右弼"],
+      "effect": "大貴",
+      "condition": "來會",
+      "location_meaning": {
+        "命宮": "在本地發展比外地好",
+        "夫妻宮": "伴侶很優秀",
+        "遷移宮": "去外地逢貴人，在外地孤獨"
+      }
+    },
+    {
+      "id": "tianfu_tianxiang",
+      "stars": ["天府", "天相"],
+      "effect": "天生輔佐之人才",
+      "condition": "會命"
+    },
+    {
+      "id": "taiyang_taiyin_huake",
+      "stars": ["太陽", "太陰", "化科"],
+      "effect": "從事專科技術專長工作",
+      "jobs": ["會計師", "教師", "建築師", "律師"],
+      "condition": "同宮遇到化科"
+    },
+    {
+      "id": "taiyin_wenqu_wenchang",
+      "stars": ["太陰", "文曲", "文昌"],
+      "effect": "桃花命（女命）/ 才藝過人",
+      "condition": "入命"
+    },
+    {
+      "id": "jumon_huaji_tianma",
+      "stars": ["巨門", "化忌", "天馬"],
+      "effect": "因為車禍打官司",
+      "condition": "同宮",
+      "notes": "巨門（是非、口舌、爭執）+化忌=加重巨門的凶+天馬（車禍）"
+    },
+    {
+      "id": "tanlang_huoxing",
+      "stars": ["貪狼", "火星"],
+      "effect": "火貪格——火貴格，武貴",
+      "condition": "同宮或三方會"
+    },
+    {
+      "id": "tanlang_lingxing",
+      "stars": ["貪狼", "鈴星"],
+      "effect": "鈴貪格，武貴",
+      "condition": "同宮或三方會"
+    },
+    {
+      "id": "lucun_tianma",
+      "stars": ["祿存", "天馬"],
+      "effect": "祿馬交馳，發大財",
+      "condition": "同宮或會照"
+    },
+    {
+      "id": "hualu_tianma",
+      "stars": ["化祿", "天馬"],
+      "effect": "發大財",
+      "condition": "同宮或會照"
+    },
+    {
+      "id": "ziwei_tianma",
+      "stars": ["紫微", "天馬"],
+      "effect": "扶轝馬，官運亨通",
+      "condition": "同宮"
+    },
+    {
+      "id": "tianfu_tianma",
+      "stars": ["天府", "天馬"],
+      "effect": "扶轝馬，官運亨通、財運佳",
+      "condition": "同宮"
+    },
+    {
+      "id": "taiyang_tianma",
+      "stars": ["太陽", "天馬"],
+      "effect": "雄馬，早年成功、貴人多",
+      "condition": "同宮"
+    },
+    {
+      "id": "taiyin_tianma",
+      "stars": ["太陰", "天馬"],
+      "effect": "財馬/雌馬，財源穩定、財運佳",
+      "condition": "同宮"
+    },
+    {
+      "id": "wuqu_tianma",
+      "stars": ["武曲", "天馬"],
+      "effect": "財馬，財源廣進",
+      "condition": "同宮"
+    },
+    {
+      "id": "dikong_tianma",
+      "stars": ["地空", "天馬"],
+      "effect": "死馬，做事無力、奔波無成",
+      "condition": "同宮",
+      "type": "凶"
+    },
+    {
+      "id": "dijie_tianma",
+      "stars": ["地劫", "天馬"],
+      "effect": "空亡馬，一生奔波無成",
+      "condition": "同宮",
+      "type": "凶"
+    },
+    {
+      "id": "tuoluo_tianma",
+      "stars": ["陀羅", "天馬"],
+      "effect": "折足馬/絆腳馬，勞而無功",
+      "condition": "同宮",
+      "type": "凶"
+    },
+    {
+      "id": "huoxing_tianma",
+      "stars": ["火星", "天馬"],
+      "effect": "戰馬，蠻幹、開拓但辛苦",
+      "condition": "同宮",
+      "type": "凶"
+    },
+    {
+      "id": "lingxing_tianma",
+      "stars": ["鈴星", "天馬"],
+      "effect": "戰馬，蠻幹、開拓但辛苦",
+      "condition": "同宮",
+      "type": "凶"
+    },
+    {
+      "id": "huaji_tianma",
+      "stars": ["化忌", "天馬"],
+      "effect": "是非馬，是非困擾多、奔波勞碌",
+      "condition": "同宮",
+      "type": "凶"
+    },
+    {
+      "id": "huaquan_lucun",
+      "stars": ["化權", "祿存"],
+      "effect": "權祿在財帛宮相逢，一定會自己做事業當老闆",
+      "condition": "在財帛宮"
+    },
+    {
+      "id": "huaquan_huake",
+      "stars": ["化權", "化科"],
+      "effect": "醫院主任、院長、學校校長、法官",
+      "condition": "在命宮三方四正"
+    },
+    {
+      "id": "wuguan_huake",
+      "stars": ["武官星", "化科"],
+      "effect": "自由業人士（醫生、律師、會計師、工程師、建築師）",
+      "condition": "武官坐命+化科"
+    }
+  ],
+  "宮位組合": [
+    {
+      "id": "huaji_qianyi_chong",
+      "description": "化忌在遷移宮對沖命宮",
+      "effect": "非常凶，半空折翅，大限在30歲",
+      "severity": "大凶"
+    },
+    {
+      "id": "huaji_fumu_riyue_fanbei",
+      "description": "化忌在父母宮+日月反背格",
+      "effect": "1、父母不在身邊；2、父母雙亡",
+      "severity": "凶"
+    },
+    {
+      "id": "hongluan_tianxi_fude",
+      "description": "天喜星、紅鸞在福德宮",
+      "effect": "代表多婚",
+      "severity": "中性"
+    },
+    {
+      "id": "hongluan_tianxi_zinv",
+      "description": "紅鸞、天喜兩顆星交會在子女宮",
+      "effect": "即使是化忌也勢必要結婚",
+      "severity": "吉"
+    },
+    {
+      "id": "pojun_fude_or_fuqi",
+      "description": "破軍星在福德或夫妻宮",
+      "effect": "對婚姻不好",
+      "severity": "凶"
+    },
+    {
+      "id": "qisha_shengong",
+      "description": "七殺臨身宮",
+      "effect": "終不美，一輩子多敗少成",
+      "severity": "凶"
+    },
+    {
+      "id": "zuofu_youbi_dushou",
+      "description": "左輔或右弼星單星獨守有人的宮",
+      "effect": {
+        "命宮": "主孤獨",
+        "夫妻宮": "主二婚",
+        "子女宮": "無子女",
+        "父母宮": "代表父母離散",
+        "福德宮": "最慘"
+      },
+      "severity": "凶"
+    }
+  ],
+  "合八字配對": [
+    {
+      "id": "muzi_ge",
+      "name": "母子格",
+      "condition": "男人父母宮的星正好在伴侶的命宮",
+      "effect": "吉，如母子般關係",
+      "severity": "大吉"
+    },
+    {
+      "id": "xiongdi_ge",
+      "name": "兄弟格",
+      "condition": "男人兄弟宮的星在伴侶的命宮",
+      "effect": "如兄弟般關係",
+      "severity": "中吉"
+    },
+    {
+      "id": "pengyou_ge",
+      "name": "朋友格",
+      "condition": "男人朋友宮的星在伴侶的命宮",
+      "effect": "如朋友般關係",
+      "severity": "普通"
+    }
+  ],
+  "破解方法": [
+    {
+      "issue": "婚姻凶",
+      "remedies": [
+        "伴侶是二婚",
+        "伴侶長或小7歲以上"
+      ]
+    },
+    {
+      "issue": "化忌對沖命宮+日月反背格",
+      "remedies": [
+        "過繼給別人養能化解"
+      ]
+    },
+    {
+      "issue": "化忌入福德宮一輩子都不順",
+      "remedies": [
+        "入僧道可解"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Node
+node_modules/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+
+# Credentials
+credentials/
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!next.config.ts
+!postcss.config.mjs
+!eslint.config.mjs
+!backend/rules/*.json
+!backend/rules/**/*.json
+
+# Large knowledge files (keep processed, exclude raw)
+knowledge/raw/
+knowledge/vectors/
+
+# Logs
+*.log
+.DS_Store

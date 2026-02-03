@@ -1,0 +1,178 @@
+{
+  "方位對應": {
+    "八卦方位": {
+      "乾": {"direction": "西北", "represents": "父親、丈夫"},
+      "坤": {"direction": "西南", "represents": "母親、妻子"},
+      "震": {"direction": "正東", "represents": "長子"},
+      "巽": {"direction": "東南", "represents": "長女"},
+      "坎": {"direction": "正北", "represents": "二子"},
+      "離": {"direction": "正南", "represents": "二女"},
+      "艮": {"direction": "東北", "represents": "三子"},
+      "兌": {"direction": "正西", "represents": "少女"}
+    },
+    "命盤方位對應": {
+      "寅": "東北（春）",
+      "卯": "正東（夏）",
+      "辰": "東南（秋）",
+      "巳": "東南（冬）",
+      "午": "正南",
+      "未": "西南",
+      "申": "西南",
+      "酉": "正西",
+      "戌": "西北",
+      "亥": "西北",
+      "子": "正北",
+      "丑": "東北"
+    }
+  },
+  "凶宅判斷": [
+    {
+      "id": "xibei_chufang",
+      "position": "西北角",
+      "element": "廚房",
+      "effect": "刀象，死先生",
+      "severity": "大凶",
+      "notes": "西北角是乾位，代表父親、丈夫"
+    },
+    {
+      "id": "xinan_chufang",
+      "position": "西南角",
+      "element": "廚房",
+      "effect": "死妻",
+      "severity": "大凶",
+      "notes": "西南角是坤位，代表母親、妻子"
+    },
+    {
+      "id": "xibei_keting",
+      "position": "西北角",
+      "element": "客廳",
+      "effect": "夫妻生離",
+      "severity": "凶"
+    },
+    {
+      "id": "cesuo_zhongjian",
+      "position": "房子中間",
+      "element": "廁所",
+      "effect": "主悶，主心臟病",
+      "severity": "大凶"
+    },
+    {
+      "id": "xibei_cesuo",
+      "position": "西北角",
+      "element": "廁所",
+      "effect": "缺夫位，得不到丈夫的助力",
+      "severity": "凶"
+    },
+    {
+      "id": "zhengdong_keting",
+      "position": "正東",
+      "element": "客廳或餐廳",
+      "effect": "缺東宮，無子宅",
+      "severity": "凶",
+      "notes": "正東是震位，代表長子"
+    },
+    {
+      "id": "chuang_fenjing",
+      "position": "分經上",
+      "element": "床",
+      "effect": "主凶，家裡絕代",
+      "severity": "大凶",
+      "notes": "床不能擺在分經"
+    }
+  ],
+  "臥室方位": [
+    {
+      "id": "xinan_nv_dansheng",
+      "position": "西南角",
+      "suitable_for": "已婚女性",
+      "not_suitable": "女人單身",
+      "effect": "女人單身居住代表孤獨",
+      "notes": "西南角的臥房不適合女人單身居住"
+    },
+    {
+      "id": "xibei_nan_wanhun",
+      "position": "西北角",
+      "suitable_for": "已婚男性、一家之主",
+      "effect": "男人晚婚大部分都住西北角",
+      "notes": "主臥放在西北角可以化解某些問題"
+    },
+    {
+      "id": "dongnan_nv",
+      "position": "東南角",
+      "suitable_for": "想再婚的單身女性",
+      "effect": "讓女人的紅鸞星再動",
+      "notes": "住在東南角的臥房，頭頂西南、腳朝東北睡"
+    },
+    {
+      "id": "xinan_daizi",
+      "position": "西南角",
+      "suitable_for": "帶著孩子想結婚的人",
+      "effect": "帶著孩子結婚住西南角"
+    },
+    {
+      "id": "xibei_mudaifu",
+      "position": "西北角",
+      "suitable_for": null,
+      "not_suitable": "有孩子的單身女性",
+      "effect": "母待父職一輩子單身"
+    }
+  ],
+  "床位擺放": [
+    {
+      "principle": "根據命盤吉位決定腳朝向",
+      "notes": "脚朝的方向命盤吉的位置"
+    },
+    {
+      "principle": "床頭方位",
+      "good": ["北", "西"],
+      "bad": ["東（在東邊房子時）"],
+      "notes": "東邊的房子裡床頭也靠著東邊的牆，負負得正是無子宅"
+    },
+    {
+      "principle": "延年方",
+      "condition": "有解厄制化的星",
+      "example": "紫薇廟+天府廟在寅宮（睡覺腳朝東北角）"
+    }
+  ],
+  "書桌擺放": [
+    {
+      "purpose": "讀書考試",
+      "direction": "朝向化科所在宮位"
+    },
+    {
+      "purpose": "做生意賺錢",
+      "direction": "朝向化祿、貪狼、祿存所在宮位",
+      "notes": "如果祿和忌同宮則不可朝向"
+    }
+  ],
+  "住宅格局": [
+    {
+      "id": "yice_zhuren",
+      "issue": "一側住人",
+      "description": "人住在臥室均在東邊或臥室均在西邊",
+      "effect": "不吉",
+      "notes": "東西邊劃分看夫妻，南北邊劃分看生男女（南女北男）"
+    }
+  ],
+  "化解方法": [
+    {
+      "issue": "夫妻生離死別",
+      "conditions": [
+        "福德宮凶（福德宮有化忌或廉貞破軍或廉貞貪狼）",
+        "陽宅西北方是廚房死先生、西南方是廚房死妻、西北方是客廳夫妻生離"
+      ],
+      "notes": "必須命理+陽宅均符合才成格"
+    },
+    {
+      "issue": "想調整運勢",
+      "method": "改運的時機，有人的宮（交友宮、福德宮、父母宮、兄弟宮、夫妻宮、子女宮）的前一年年底到該方位睡"
+    },
+    {
+      "issue": "媽媽身體不好",
+      "method": "媽媽住在正西北、正西南、正東南三個位置對身體好"
+    }
+  ],
+  "凶災時間": {
+    "rule": "一個凶宅一般3成災，三個月或三年，一般三年"
+  }
+}

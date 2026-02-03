@@ -1,0 +1,266 @@
+{
+  "吉格": [
+    {
+      "id": "zifu_zuohuan",
+      "name": "紫府坐桓",
+      "conditions": {
+        "命宮": {"stars": ["紫微廟", "天府廟"], "branch": "寅"}
+      },
+      "meaning": "位列三台（將相），爵祿榮昌",
+      "effect": "大貴格局",
+      "notes": "紫薇庙、天府庙在寅宫在官禄宫大好"
+    },
+    {
+      "id": "qisha_chaodou",
+      "name": "七殺朝斗",
+      "conditions": {
+        "命宮": {"stars": ["七殺廟"], "branch": "申"}
+      },
+      "meaning": "將星入命，威震邊疆、爵祿榮昌",
+      "effect": "武職大利"
+    },
+    {
+      "id": "riyue_jiaming",
+      "name": "日月夾命",
+      "conditions": {
+        "requirement": "太陽太陰均廟旺在命宮兩側"
+      },
+      "meaning": "一世財祿無缺，一世榮華",
+      "effect": "大吉"
+    },
+    {
+      "id": "riyue_bingming",
+      "name": "日月並明",
+      "conditions": {
+        "option1": {"太陽旺": "辰宮", "太陰旺": "戌宮", "命宮": ["辰", "戌"]},
+        "option2": {"太陽旺": "巳宮", "太陰旺": "酉宮", "命宮": "丑"}
+      },
+      "meaning": "主一世榮華",
+      "effect": "大吉"
+    },
+    {
+      "id": "mingzhu_chuhai",
+      "name": "明珠出海格",
+      "conditions": {
+        "命宮": "未宮",
+        "太陰入廟": "亥宮",
+        "太陽入廟": "卯宮"
+      },
+      "meaning": "父母雙全、個性公正清明、事業大利",
+      "effect": "大吉"
+    },
+    {
+      "id": "juri_ge",
+      "name": "巨日格",
+      "conditions": {
+        "requirement": "命宮三方四正巨門廟+太陽廟"
+      },
+      "meaning": "大生意人，巨富",
+      "gender_effect": {
+        "男": "大富大貴，名嘴",
+        "女": "主偏房，嘮叨"
+      }
+    },
+    {
+      "id": "huotan_ge",
+      "name": "火貪格",
+      "conditions": {
+        "requirement": "貪狼遇火星或鈴星"
+      },
+      "meaning": "火貴格，武貴",
+      "effect": "武職大利",
+      "notes": "貪狼、七殺、破軍最希望遇到火星、鈴星"
+    },
+    {
+      "id": "tianliang_wuzhong",
+      "name": "天梁入庙在午宫入命宫",
+      "conditions": {
+        "命宮": {"stars": ["天梁廟"], "branch": "午"}
+      },
+      "meaning": "武官一品，近天子、手有生殺之權",
+      "effect": "大貴"
+    },
+    {
+      "id": "yuelan_tianmen",
+      "name": "月朗天門",
+      "conditions": {
+        "命宮": {"stars": ["太陰廟"], "branch": "亥"}
+      },
+      "meaning": "女命最吉，身材瘦瘦細細，清秀，眼睛大大",
+      "gender_effect": {
+        "女": "最吉"
+      }
+    },
+    {
+      "id": "rizhao_leimen",
+      "name": "日照雷門",
+      "conditions": {
+        "命宮": {"stars": ["太陽廟"], "branch": "卯"}
+      },
+      "meaning": "男命最吉",
+      "gender_effect": {
+        "男": "最吉",
+        "女": "熱情如火，眼和臉都圓圓，紅光滿面，身材豐滿"
+      }
+    },
+    {
+      "id": "rili_zhongtian",
+      "name": "日麗中天格",
+      "conditions": {
+        "命宮": {"stars": ["太陽廟"], "branch": "午"}
+      },
+      "meaning": "武職大利",
+      "effect": "武職大利"
+    },
+    {
+      "id": "shuicheng_guie",
+      "name": "水澄桂萼",
+      "conditions": {
+        "命宮": {"stars": ["太陰廟"], "branch": "子"}
+      },
+      "meaning": "代表清官，對當官的人利",
+      "gender_effect": {
+        "女": "月亮入命漂亮"
+      }
+    },
+    {
+      "id": "yingxing_ruming",
+      "name": "英星入命",
+      "conditions": {
+        "命宮": {"stars": ["破軍"], "branch": ["子", "午"]}
+      },
+      "meaning": "男人命利武官，威震邊疆",
+      "gender_effect": {
+        "男": "威震邊疆",
+        "女": "身材瘦瘦小小，個性孤僻，不重利，晚婚"
+      }
+    },
+    {
+      "id": "xiongxiu_chaoyuan",
+      "name": "雄宿朝元格",
+      "conditions": {
+        "命宮": {"stars": ["廉貞"], "branch": ["申", "寅"]}
+      },
+      "meaning": "利軍人（出將相）和商人（做老闆）",
+      "notes": "後期會毀在桃花上"
+    },
+    {
+      "id": "quanlu_xunfeng",
+      "name": "權祿巡逢",
+      "conditions": {
+        "命宮三方四正": ["化權", "化祿"]
+      },
+      "meaning": "自己做事業當老闆",
+      "effect": "財運佳"
+    },
+    {
+      "id": "jiyue_tongliang",
+      "name": "機月同梁",
+      "conditions": {
+        "命宮三方四正": ["天機", "太陰", "天同", "天梁"]
+      },
+      "meaning": "吏也，公家單位工作",
+      "effect": "適合公務員"
+    }
+  ],
+  "凶格": [
+    {
+      "id": "riyue_fanbei",
+      "name": "日月反背格",
+      "conditions": {
+        "requirement": "太陽和太陰均落陷"
+      },
+      "meaning": "工作披星戴月，晚上比白天忙；六親不靠；性情非常的剛燥",
+      "effect": "辛苦格局",
+      "notes": "日月反背夾命一世辛勞"
+    },
+    {
+      "id": "bankong_zhichi",
+      "name": "半空折翅",
+      "conditions": {
+        "option1": "化忌在迁移宫对冲命宫",
+        "option2": "命宫三方四正凶星来汇"
+      },
+      "meaning": "大限在中年（30歲左右）",
+      "effect": "大凶",
+      "notes": "化忌對沖命宮+日月反背格代表大限在中年，過繼給別人養能化解"
+    },
+    {
+      "id": "tianluo_diwang",
+      "name": "天羅地網",
+      "conditions": {
+        "requirement": "廉貞落陷、貪狼落陷在巳宮或亥宮對沖命宮"
+      },
+      "meaning": "大限在中年（30歲左右）",
+      "effect": "大凶"
+    },
+    {
+      "id": "yangtuo_jiasha",
+      "name": "羊陀夾殺",
+      "conditions": {
+        "命宮兩側": ["擎羊", "陀羅"]
+      },
+      "meaning": "容易被人影響，犯小人",
+      "effect": "小凶"
+    },
+    {
+      "id": "lianzhen_tanlang_xianjin",
+      "name": "廉貞貪狼落陷入命",
+      "conditions": {
+        "命宮": {"stars": ["廉貞陷", "貪狼陷"]}
+      },
+      "meaning": "自殺格",
+      "effect": "大凶"
+    },
+    {
+      "id": "wuqu_qisha_xian",
+      "name": "武曲七殺陷",
+      "conditions": {
+        "requirement": "武曲陷+七殺陷同宮"
+      },
+      "meaning": "兵陣死亡，死在兵器上面",
+      "effect": "大凶"
+    },
+    {
+      "id": "lianzhen_pojun",
+      "name": "廉貞破軍",
+      "conditions": {
+        "requirement": "廉貞破軍在卯、酉宮會合"
+      },
+      "meaning": "水中做塚",
+      "effect": "凶"
+    }
+  ],
+  "特殊格局": [
+    {
+      "id": "fanshui_taohua",
+      "name": "泛水桃花",
+      "conditions": {
+        "命宮": {"stars": ["貪狼"], "branch": ["亥", "子"]}
+      },
+      "meaning": "桃花命",
+      "gender_effect": {
+        "女明星": "聲名遠播",
+        "男": "貪狼庙旺出武將，落陷主殺"
+      }
+    },
+    {
+      "id": "qisha_pojun_tanlang",
+      "name": "殺破狼會",
+      "conditions": {
+        "requirement": "七殺、破軍、貪狼三方會"
+      },
+      "meaning": "均為剛愎自用的人比較被人利用",
+      "notes": "七殺、破軍主勞、耗；貪狼主財、桃花"
+    },
+    {
+      "id": "nanren_beixiang",
+      "name": "南人北相/北人南相",
+      "conditions": {
+        "requirement": "體型與出生地不符"
+      },
+      "meaning": "非富即貴",
+      "effect": "吉"
+    }
+  ]
+}
