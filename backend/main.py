@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.config import get_settings
-from backend.api import chart, analysis, fengshui, divination, ai_reading
+from backend.api import chart, analysis, fengshui, divination, ai_reading, feedback
 
 # Get settings
 settings = get_settings()
@@ -38,6 +38,7 @@ app.include_router(analysis.router)
 app.include_router(fengshui.router)
 app.include_router(divination.router)
 app.include_router(ai_reading.router)
+app.include_router(feedback.router)
 
 
 @app.get("/")
@@ -68,6 +69,12 @@ async def root():
                 "divine": "/divination/divine - 六壬速斷卜卦",
                 "methods": "/divination/methods - 卜卦方法列表",
                 "rules": "/divination/rules - 六壬速斷規則",
+            },
+            "feedback": {
+                "submit": "/feedback/submit - 提交批命反饋",
+                "stats": "/feedback/stats - 查看準確率統計",
+                "report": "/feedback/report - 生成改進建議報告",
+                "recent": "/feedback/recent - 查看最近反饋",
             },
         },
     }
