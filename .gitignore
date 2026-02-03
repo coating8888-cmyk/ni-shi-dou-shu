@@ -25,6 +25,7 @@ credentials/
 !eslint.config.mjs
 !backend/rules/*.json
 !backend/rules/**/*.json
+!**/extraction_log*.json
 
 # Large knowledge files (only exclude raw videos)
 knowledge/raw/
