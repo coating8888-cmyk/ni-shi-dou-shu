@@ -1,0 +1,130 @@
+{
+  "說明": {
+    "用途": "批命反饋學習系統 - 收集用戶回饋，持續優化判斷準確度",
+    "流程": "批命 → 用戶反饋 → 分析差異 → 調整規則"
+  },
+  "反饋收集結構": {
+    "基本資訊": {
+      "feedback_id": "唯一識別碼",
+      "timestamp": "反饋時間",
+      "chart_id": "對應命盤ID"
+    },
+    "原始預測": {
+      "prediction_category": "預測類別（婚姻/事業/健康/子女/財運）",
+      "prediction_content": "AI的預測內容",
+      "used_rules": ["使用的規則ID列表"],
+      "confidence": "AI信心度（高/中/低）"
+    },
+    "用戶反饋": {
+      "accuracy_rating": "準確度評分（1-5星）",
+      "is_accurate": "是否準確（true/false/partial）",
+      "actual_situation": "實際情況描述",
+      "specific_feedback": {
+        "correct_parts": "哪些說對了",
+        "incorrect_parts": "哪些說錯了",
+        "missing_parts": "漏掉什麼重要的"
+      }
+    }
+  },
+  "反饋類型模板": {
+    "婚姻反饋": {
+      "questions": [
+        {"id": "M1", "question": "婚姻狀態預測是否準確？", "options": ["完全準確", "大致準確", "部分準確", "不準確"]},
+        {"id": "M2", "question": "結婚年齡預測？", "type": "compare", "fields": ["預測年齡", "實際年齡"]},
+        {"id": "M3", "question": "配偶特質描述？", "options": ["非常像", "有點像", "不太像", "完全不像"]},
+        {"id": "M4", "question": "婚姻順利程度？", "type": "text"}
+      ]
+    },
+    "事業反饋": {
+      "questions": [
+        {"id": "C1", "question": "職業方向預測是否準確？", "options": ["完全準確", "大致準確", "部分準確", "不準確"]},
+        {"id": "C2", "question": "實際職業是什麼？", "type": "text"},
+        {"id": "C3", "question": "是自己當老闆還是上班族？", "options": ["老闆", "上班族", "自由業", "公務員"]},
+        {"id": "C4", "question": "事業發展時機預測？", "type": "compare", "fields": ["預測年份", "實際年份"]}
+      ]
+    },
+    "健康反饋": {
+      "questions": [
+        {"id": "H1", "question": "健康弱點預測是否準確？", "options": ["完全準確", "大致準確", "部分準確", "不準確"]},
+        {"id": "H2", "question": "實際健康問題是什麼？", "type": "text"},
+        {"id": "H3", "question": "發病時間預測？", "type": "compare", "fields": ["預測年份", "實際年份"]}
+      ]
+    },
+    "子女反饋": {
+      "questions": [
+        {"id": "K1", "question": "子女數量預測？", "type": "compare", "fields": ["預測數量", "實際數量"]},
+        {"id": "K2", "question": "子女緣分描述是否準確？", "options": ["完全準確", "大致準確", "部分準確", "不準確"]}
+      ]
+    },
+    "重大事件反饋": {
+      "questions": [
+        {"id": "E1", "question": "預測的重大事件是否發生？", "options": ["已發生", "尚未發生", "沒發生"]},
+        {"id": "E2", "question": "發生時間是否準確？", "type": "compare", "fields": ["預測時間", "實際時間"]},
+        {"id": "E3", "question": "事件描述", "type": "text"}
+      ]
+    }
+  },
+  "學習機制": {
+    "準確度追蹤": {
+      "by_rule": "追蹤每條規則的準確率",
+      "by_category": "追蹤每個類別的準確率",
+      "by_star_combination": "追蹤每個星曜組合的準確率"
+    },
+    "規則調整邏輯": {
+      "高準確率規則": {
+        "threshold": "準確率 > 80%",
+        "action": "提高該規則權重和信心度"
+      },
+      "中準確率規則": {
+        "threshold": "準確率 50-80%",
+        "action": "保持現狀，繼續收集數據"
+      },
+      "低準確率規則": {
+        "threshold": "準確率 < 50%",
+        "action": "標記待檢討，可能需要增加條件或修正"
+      }
+    },
+    "新模式發現": {
+      "方法": "分析錯誤案例，找出共同特徵",
+      "目標": "發現倪師規則中未記載的判斷模式"
+    }
+  },
+  "數據分析報告": {
+    "週報": {
+      "total_feedbacks": "本週收到的反饋數量",
+      "average_accuracy": "平均準確率",
+      "best_performing_rules": "表現最好的規則",
+      "worst_performing_rules": "表現最差的規則",
+      "common_errors": "常見錯誤類型"
+    },
+    "規則改進建議": {
+      "format": {
+        "rule_id": "規則ID",
+        "current_accuracy": "當前準確率",
+        "sample_size": "樣本數量",
+        "error_pattern": "錯誤模式",
+        "suggested_fix": "建議修正"
+      }
+    }
+  },
+  "實際案例庫": {
+    "說明": "經過驗證的真實案例，用於訓練和測試",
+    "案例結構": {
+      "case_id": "案例ID",
+      "birth_data": "出生資料（年月日時）",
+      "chart_features": "命盤關鍵特徵",
+      "predictions": "AI預測內容",
+      "actual_outcomes": "實際結果",
+      "accuracy_score": "準確度分數",
+      "lessons_learned": "學到的教訓"
+    }
+  },
+  "隱私保護": {
+    "原則": [
+      "出生資料匿名化處理",
+      "只保留命盤特徵，不保留個人身份",
+      "用戶可選擇是否參與反饋",
+      "反饋資料僅用於改進系統"
+    ]
+  }
+}
