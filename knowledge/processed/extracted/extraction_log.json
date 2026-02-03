@@ -1,0 +1,80 @@
+{
+  "processed_at": "2026-02-02T19:04:04.325530",
+  "files": [
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【听课笔记】天-人间（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/【听课笔记】天-人间（可打印）.txt",
+      "char_count": 9319
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/倪海厦-天纪-天机道-听课笔记，精彩绝伦.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/倪海厦-天纪-天机道-听课笔记，精彩绝伦.txt",
+      "char_count": 14699
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【听课笔记】天-地脉（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/【听课笔记】天-地脉（可打印）.txt",
+      "char_count": 4785
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【听课笔记】天-天机（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/【听课笔记】天-天机（可打印）.txt",
+      "char_count": 14699
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【天辅助教材】卦图象解.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/【天辅助教材】卦图象解.txt",
+      "char_count": 9321
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【视频同步文稿】天-全集（1版可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/【视频同步文稿】天-全集（1版可打印）.txt",
+      "char_count": 395011
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【视频同步文稿】倪-八纲辨证（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/【视频同步文稿】倪-八纲辨证（可打印）.txt",
+      "char_count": 22417
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/2.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/地di纪（8篇）_2.txt",
+      "char_count": 2057
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/7.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/地di纪（8篇）_7.txt",
+      "char_count": 951
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/6.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/地di纪（8篇）_6.txt",
+      "char_count": 2063
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/1.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/地di纪（8篇）_1.txt",
+      "char_count": 2812
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/8.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/地di纪（8篇）_8.txt",
+      "char_count": 1406
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/5.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/地di纪（8篇）_5.txt",
+      "char_count": 2524
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/4.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/地di纪（8篇）_4.txt",
+      "char_count": 1475
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/3.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/地di纪（8篇）_3.txt",
+      "char_count": 1772
+    }
+  ]
+}

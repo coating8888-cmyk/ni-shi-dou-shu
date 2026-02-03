@@ -1,0 +1,174 @@
+{
+  "processed_at": "2026-02-02T19:14:31.920105",
+  "files": [
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【听课笔记】天-人间（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_【听课笔记】天-人间（可打印）.txt",
+      "char_count": 9043
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/倪海厦-天纪-天机道-听课笔记，精彩绝伦.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_倪海厦-天纪-天机道-听课笔记，精彩绝伦.txt",
+      "char_count": 14378
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【听课笔记】天-地脉（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_【听课笔记】天-地脉（可打印）.txt",
+      "char_count": 4659
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【听课笔记】天-天机（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_【听课笔记】天-天机（可打印）.txt",
+      "char_count": 14378
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【天辅助教材】卦图象解.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_【天辅助教材】卦图象解.txt",
+      "char_count": 8355
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【视频同步文稿】天-全集（1版可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_【视频同步文稿】天-全集（1版可打印）.txt",
+      "char_count": 386895
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【视频同步文稿】倪-八纲辨证（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_【视频同步文稿】倪-八纲辨证（可打印）.txt",
+      "char_count": 21901
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/2.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_地di纪（8篇）_2.txt",
+      "char_count": 2029
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/7.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_地di纪（8篇）_7.txt",
+      "char_count": 937
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/6.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_地di纪（8篇）_6.txt",
+      "char_count": 2021
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/1.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_地di纪（8篇）_1.txt",
+      "char_count": 2770
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/8.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_地di纪（8篇）_8.txt",
+      "char_count": 1378
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/5.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_地di纪（8篇）_5.txt",
+      "char_count": 2482
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/4.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_地di纪（8篇）_4.txt",
+      "char_count": 1447
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/pdf/地di纪（8篇）/3.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/pdf_地di纪（8篇）_3.txt",
+      "char_count": 1744
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/5、人纪之《金匮要略笔记【文字】》/【电子教材】人-金匮要略（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_5、人纪之《金匮要略笔记【文字】》_【电子教材】人-金匮要略（可打印）.txt",
+      "char_count": 462715
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/3、人纪之《神农本草经笔记【文字】》/《人纪》讲稿神农本草经.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_3、人纪之《神农本草经笔记【文字】》_《人纪》讲稿神农本草经.txt",
+      "char_count": 13492
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/3、人纪之《神农本草经笔记【文字】》/神农本草经倪海厦注整理归纳版.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_3、人纪之《神农本草经笔记【文字】》_神农本草经倪海厦注整理归纳版.txt",
+      "char_count": 11040
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/3、人纪之《神农本草经笔记【文字】》/【电子教材】人-神农本草经（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_3、人纪之《神农本草经笔记【文字】》_【电子教材】人-神农本草经（可打印）.txt",
+      "char_count": 209612
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/4、人纪之《伤寒论笔记【文字】》/【电子教材】人-伤寒论（可打印）.pdf",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_4、人纪之《伤寒论笔记【文字】》_【电子教材】人-伤寒论（可打印）.txt",
+      "char_count": 264113
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/梁栋对话倪海厦.docx",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_梁栋对话倪海厦.txt",
+      "char_count": 133142
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/1、人纪之《针灸大成笔记【文字】》/倪海厦针灸篇视频讲稿.docx",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_1、人纪之《针灸大成笔记【文字】》_倪海厦针灸篇视频讲稿.txt",
+      "char_count": 260830
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/1、人纪之《针灸大成笔记【文字】》/倪海厦讲针灸大成学习笔记-韩克庆.docx",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_1、人纪之《针灸大成笔记【文字】》_倪海厦讲针灸大成学习笔记-韩克庆.txt",
+      "char_count": 42310
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/3、人纪之《神农本草经笔记【文字】》/神农本草实录版.docx",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_3、人纪之《神农本草经笔记【文字】》_神农本草实录版.txt",
+      "char_count": 474529
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/地脉道听课笔记.doc",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_地脉道听课笔记.txt",
+      "char_count": 14719
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/人间道听课笔记.doc",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_人间道听课笔记.txt",
+      "char_count": 25425
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/天机道听课笔记.doc",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_天机道听课笔记.txt",
+      "char_count": 42046
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/1、人纪之《针灸大成笔记【文字】》/倪海厦针灸学习笔记1李绍英.doc",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_1、人纪之《针灸大成笔记【文字】》_倪海厦针灸学习笔记1李绍英.txt",
+      "char_count": 60051
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/5、人纪之《金匮要略笔记【文字】》/倪海厦金匮要略.doc",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_5、人纪之《金匮要略笔记【文字】》_倪海厦金匮要略.txt",
+      "char_count": 684077
+    },
+    {
+      "source": "/home/hero/ai/倪師斗數/knowledge/raw/text/4、人纪之《伤寒论笔记【文字】》/倪海厦伤寒论讲义全.doc",
+      "output": "/home/hero/ai/倪師斗數/knowledge/processed/extracted/text_4、人纪之《伤寒论笔记【文字】》_倪海厦伤寒论讲义全.txt",
+      "char_count": 306635
+    }
+  ],
+  "errors": [
+    "/home/hero/ai/倪師斗數/knowledge/raw/pdf/._【听课笔记】天-人间（可打印）.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/pdf/梁冬对话倪海厦部分.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【视频同步文稿】天-全集（2版）.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/pdf/倪海厦医师在斯坦福大学演讲.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【视频同步文稿】天-全集（2版）-215-314.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/pdf/【视频同步文稿】天-全集（2版）-1-214.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/1、人纪之《针灸大成笔记【文字】》/倪海厦讲针灸大成学习笔记-韩克庆.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/1、人纪之《针灸大成笔记【文字】》/【电子教材】人-针灸篇（可打印）.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/【电子教材】人-黄帝内经（可打印）.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/倪海厦人纪教程简体整理稿之黄帝内经.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/各课程用到的原著/黄帝内经完整版.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/各课程用到的原著/金匮要略吴迁本终版.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/各课程用到的原著/桂林古本伤寒杂病论 .pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/各课程用到的原著/针灸大成  [明]杨继洲（高清文字版）.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/各课程用到的原著/神农本草经.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/各课程用到的原著/伤寒杂病论.pdf",
+    "/home/hero/ai/倪師斗數/knowledge/raw/text/2、人纪之《黄帝内经笔记【文字】》/倪海厦人纪教程简体整理稿之黄帝内经.docx"
+  ]
+}
