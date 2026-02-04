@@ -1549,7 +1549,7 @@ export function AnalysisPanel({ analysis, isLoading, error, originPalace, astrol
               <div className="bg-gradient-to-r from-pink-50/50 to-violet-50/50 rounded-2xl p-8 text-center border border-pink-100/50">
                 <p className="text-xl text-pink-400">✨ 點擊「開始 AI 批命」，讓 AI 閱讀倪師講義後為您分析命盤</p>
                 <p className="text-lg mt-2 text-pink-300">AI 會用算命師的口吻，結合您的大限流年給出建議 🌸</p>
-                <p className="text-base mt-3 text-pink-200">（費用約 NT$1.5 / 次）</p>
+                <p className="text-base mt-3 text-pink-200">（費用約 NT$5-7 / 次）</p>
               </div>
             )}
           </div>
