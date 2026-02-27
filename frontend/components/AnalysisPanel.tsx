@@ -1206,6 +1206,8 @@ export function AnalysisPanel({ analysis, isLoading, error, originPalace, astrol
       // 各區塊資料 - 柔和馬卡龍配色
       const sections = [
         { title: '🎀 總盤解析', content: aiResponse.overall_reading, color: '#f9a8d4', lightBg: '#fdf2f8' },
+        { title: '🌿 整張盤最好的地方', content: aiResponse.best_parts, color: '#6ee7b7', lightBg: '#ecfdf5' },
+        { title: '⚠️ 最需要注意的地方', content: aiResponse.caution_parts, color: '#fdba74', lightBg: '#fff7ed' },
         { title: '🌟 來因宮解析', content: aiResponse.origin_palace_reading, color: '#fcd34d', lightBg: '#fefce8' },
         { title: '🎯 身宮解析', content: aiResponse.body_palace_reading, color: '#7dd3fc', lightBg: '#f0f9ff' },
         { title: '⭐ 四化解析', content: aiResponse.sihua_reading, color: '#c4b5fd', lightBg: '#f5f3ff' },
@@ -1555,6 +1557,34 @@ export function AnalysisPanel({ analysis, isLoading, error, originPalace, astrol
           </div>
 
         </CollapsibleSection>
+
+        {/* 整張盤最好的地方 */}
+        {aiResponse?.best_parts && (
+          <CollapsibleSection
+            title="整張盤最好的地方"
+            icon="🌿"
+            headerColor="bg-gradient-to-r from-emerald-50 to-green-50"
+            titleColor="text-emerald-500"
+          >
+            <div className="bg-gradient-to-r from-emerald-50/50 to-green-50/50 rounded-2xl p-5 border border-emerald-200 leading-relaxed">
+              {formatAIText(aiResponse.best_parts)}
+            </div>
+          </CollapsibleSection>
+        )}
+
+        {/* 最需要注意的地方 */}
+        {aiResponse?.caution_parts && (
+          <CollapsibleSection
+            title="最需要注意的地方"
+            icon="⚠️"
+            headerColor="bg-gradient-to-r from-orange-50 to-amber-50"
+            titleColor="text-orange-500"
+          >
+            <div className="bg-gradient-to-r from-orange-50/50 to-amber-50/50 rounded-2xl p-5 border border-orange-200 leading-relaxed">
+              {formatAIText(aiResponse.caution_parts)}
+            </div>
+          </CollapsibleSection>
+        )}
 
         {/* 2. 來因宮解析 - 柔和馬卡龍風格 */}
         {aiResponse?.origin_palace_reading && (

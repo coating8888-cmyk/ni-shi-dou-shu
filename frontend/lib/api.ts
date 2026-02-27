@@ -295,6 +295,8 @@ export interface AIReadingResponse {
   // 各區塊分析 (Plan B - 一次 API 呼叫)
   overall_reading: string;                    // 總盤解析
   palace_readings?: Record<string, string>;   // 各宮位解析 {"命宮": "...", "夫妻宮": "..."}
+  best_parts?: string;                        // 整張盤最好的地方
+  caution_parts?: string;                     // 最需要注意的地方
   origin_palace_reading?: string;             // 來因宮解析
   body_palace_reading?: string;               // 身宮解析
   sihua_reading?: string;                     // 四化解析

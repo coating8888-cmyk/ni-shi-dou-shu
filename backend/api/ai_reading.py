@@ -418,6 +418,25 @@ def build_user_prompt(chart_data: str) -> str:
 8. 只回傳 JSON"""
 
 
+def _repair_json(json_str: str) -> Optional[str]:
+    """嘗試修復常見的 JSON 格式問題"""
+    if not json_str:
+        return None
+    s = json_str
+    # 移除控制字元（保留 \n \t）
+    s = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', s)
+    # 移除尾逗號（例如 ,} 或 ,]）
+    s = re.sub(r',\s*([}\]])', r'\1', s)
+    # 修復未閉合的括號
+    open_braces = s.count('{') - s.count('}')
+    open_brackets = s.count('[') - s.count(']')
+    if open_braces > 0:
+        s += '}' * open_braces
+    if open_brackets > 0:
+        s += ']' * open_brackets
+    return s
+
+
 @router.post("/ai-reading", response_model=AIReadingResponse)
 async def get_ai_reading(
     request: AIReadingRequest,
@@ -452,7 +471,7 @@ async def get_ai_reading(
         client = anthropic.Anthropic(api_key=api_key)
 
         message = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=settings.claude_model,
             max_tokens=8000,  # 增加 token 上限以容納詳細分析
             system=system_prompt,
             messages=[
@@ -462,6 +481,12 @@ async def get_ai_reading(
 
         # Extract response
         response_text = message.content[0].text if message.content else ""
+
+        # 處理欄位可能是 list 的情況，轉換為 string
+        def ensure_string(value) -> str:
+            if isinstance(value, list):
+                return "\n".join(str(item) for item in value)
+            return str(value) if value else ""
 
         # 解析 JSON 回應
         try:
@@ -474,12 +499,6 @@ async def get_ai_reading(
                 json_str = response_text
 
             parsed = json.loads(json_str)
-
-            # 處理欄位可能是 list 的情況，轉換為 string
-            def ensure_string(value) -> str:
-                if isinstance(value, list):
-                    return "\n".join(str(item) for item in value)
-                return str(value) if value else ""
 
             return AIReadingResponse(
                 success=True,
@@ -499,7 +518,32 @@ async def get_ai_reading(
             )
 
         except json.JSONDecodeError:
-            # JSON 解析失敗，回傳原始文字到 overall_reading
+            # JSON 修復嘗試
+            repaired = _repair_json(json_str)
+            if repaired:
+                try:
+                    parsed = json.loads(repaired)
+                    print(f"[AI] JSON 修復成功")
+                    return AIReadingResponse(
+                        success=True,
+                        overall_reading=ensure_string(parsed.get("overall_reading", "")),
+                        palace_readings=parsed.get("palace_readings", {}),
+                        best_parts=ensure_string(parsed.get("best_parts", "")),
+                        caution_parts=ensure_string(parsed.get("caution_parts", "")),
+                        origin_palace_reading=ensure_string(parsed.get("origin_palace_reading", "")),
+                        body_palace_reading=ensure_string(parsed.get("body_palace_reading", "")),
+                        sihua_reading=ensure_string(parsed.get("sihua_reading", "")),
+                        decadal_reading=ensure_string(parsed.get("decadal_reading", "")),
+                        yearly_reading=ensure_string(parsed.get("yearly_reading", "")),
+                        career_reading=ensure_string(parsed.get("career_reading", "")),
+                        relationship_reading=ensure_string(parsed.get("relationship_reading", "")),
+                        health_reading=ensure_string(parsed.get("health_reading", "")),
+                        recommendations=ensure_string(parsed.get("recommendations", "")),
+                    )
+                except json.JSONDecodeError:
+                    pass
+            # 修復也失敗，回傳原始文字到 overall_reading
+            print(f"[AI] JSON 解析與修復均失敗，fallback 到 overall_reading")
             return AIReadingResponse(
                 success=True,
                 overall_reading=response_text,
