@@ -1,4 +1,4 @@
-"""AI-powered chart reading using Claude API with 倪師 teachings."""
+"""AI-powered chart reading using Claude API with 倪師 teachings + RAG."""
 
 import os
 from pathlib import Path
@@ -12,7 +12,28 @@ from backend.config import Settings, get_settings
 
 router = APIRouter(prefix="/chart", tags=["AI Reading"])
 
-KNOWLEDGE_DIR = Path(__file__).parent.parent.parent / "knowledge" / "processed" / "extracted"
+VECTORS_DIR = Path(__file__).parent.parent.parent / "knowledge" / "vectors"
+RULES_DIR = Path(__file__).parent.parent / "rules"
+
+# 向量庫客戶端（延遲初始化）
+_chroma_client = None
+_chroma_collection = None
+
+
+def _get_collection():
+    """取得 ChromaDB collection（延遲初始化，singleton）"""
+    global _chroma_client, _chroma_collection
+    if _chroma_collection is not None:
+        return _chroma_collection
+    try:
+        import chromadb
+        _chroma_client = chromadb.PersistentClient(path=str(VECTORS_DIR))
+        _chroma_collection = _chroma_client.get_collection("ni_shi_knowledge")
+        print(f"[RAG] 向量庫已載入，共 {_chroma_collection.count()} 條")
+        return _chroma_collection
+    except Exception as e:
+        print(f"[RAG] 向量庫載入失敗: {e}")
+        return None
 
 
 class DecadalFortune(BaseModel):
@@ -49,67 +70,214 @@ class AIReadingResponse(BaseModel):
     """AI reading response with all sections (Plan B - one API call for all)."""
     success: bool
     error: Optional[str] = None
-    # 各區塊分析（倪師版）
-    overall_reading: str = ""        # 命主總批
-    palace_readings: Dict[str, str] = {}  # 十二宮分析 {"命宮": "...", "夫妻宮": "..."}
-    best_parts: str = ""             # 整張盤最好的地方
-    caution_parts: str = ""          # 整張盤最需要注意的地方
-    origin_palace_reading: str = ""  # 來因宮解析
-    body_palace_reading: str = ""    # 身宮解析
-    sihua_reading: str = ""          # 四化解析
-    decadal_reading: str = ""        # 大限解析
-    yearly_reading: str = ""         # 流年解析
-    career_reading: str = ""         # 適合工作類型
-    relationship_reading: str = ""   # 感情婚姻
-    health_reading: str = ""         # 健康分析
-    recommendations: str = ""        # 人生升級心法
+    overall_reading: str = ""
+    palace_readings: Dict[str, str] = {}
+    best_parts: str = ""
+    caution_parts: str = ""
+    origin_palace_reading: str = ""
+    body_palace_reading: str = ""
+    sihua_reading: str = ""
+    decadal_reading: str = ""
+    yearly_reading: str = ""
+    career_reading: str = ""
+    relationship_reading: str = ""
+    health_reading: str = ""
+    recommendations: str = ""
 
 
-RULES_DIR = Path(__file__).parent.parent / "rules"
+# ── RAG: 從命盤提取搜尋關鍵字 ──────────────────────
+
+def extract_search_queries(request: AIReadingRequest) -> List[str]:
+    """從命盤數據提取多組搜尋查詢，用於向量搜尋"""
+    queries = []
+
+    # 1. 命宮主星（最重要）
+    ming_palace = request.palaces.get("命宮", {})
+    ming_stars = _get_star_names(ming_palace)
+    if ming_stars:
+        queries.append(f"命宮 {' '.join(ming_stars)} 性格 事業")
+
+    # 2. 四化位置（化忌最重要）
+    for palace_name, palace_data in request.palaces.items():
+        for star in palace_data.get("stars", []):
+            if isinstance(star, dict) and star.get("mutagen"):
+                mutagen = star["mutagen"]
+                star_name = star.get("name", "")
+                if mutagen == "忌":
+                    queries.append(f"{star_name}化忌 {palace_name} 化忌對沖")
+                elif mutagen == "祿":
+                    queries.append(f"{star_name}化祿 {palace_name}")
+
+    # 3. 三方四正核心宮位
+    key_palaces = ["財帛宮", "官祿宮", "遷移宮", "夫妻宮", "福德宮"]
+    for p_name in key_palaces:
+        p_data = request.palaces.get(p_name, {})
+        stars = _get_star_names(p_data)
+        if stars:
+            queries.append(f"{p_name} {' '.join(stars[:2])}")
+
+    # 4. 性別特定查詢
+    if request.gender == "女":
+        fude = request.palaces.get("福德宮", {})
+        fude_stars = _get_star_names(fude)
+        queries.append(f"女命 福德宮 {' '.join(fude_stars[:2]) if fude_stars else ''}")
+    else:
+        queries.append(f"男命 事業 {' '.join(ming_stars[:2]) if ming_stars else ''}")
+
+    # 5. 大限查詢
+    if request.current_decadal:
+        p_name = request.current_decadal.palaceName
+        p_data = request.palaces.get(p_name, {})
+        stars = _get_star_names(p_data)
+        queries.append(f"大限 {p_name} {' '.join(stars[:2]) if stars else ''} 十年運勢")
+
+    # 6. 流年查詢
+    if request.current_yearly:
+        queries.append(f"流年 {request.current_yearly.palaceName} 宮有宮性")
+
+    # 7. 疾厄宮健康
+    jiee = request.palaces.get("疾厄宮", {})
+    jiee_stars = _get_star_names(jiee)
+    branch = jiee.get("branch", "")
+    if jiee_stars or branch:
+        queries.append(f"疾厄宮 {branch} {' '.join(jiee_stars[:2]) if jiee_stars else ''} 健康")
+
+    # 8. 來因宮
+    if request.origin_palace:
+        queries.append(f"來因宮 {request.origin_palace.get('palace', '')} 投胎原因")
+
+    return queries[:12]  # 最多 12 個查詢
 
 
-def load_knowledge_base() -> str:
-    """Load the 倪師 teachings for context."""
+def _get_star_names(palace_data: Dict) -> List[str]:
+    """從宮位數據提取星曜名稱"""
+    names = []
+    for star in palace_data.get("stars", []):
+        if isinstance(star, dict):
+            name = star.get("name", "")
+            if name:
+                names.append(name)
+        elif isinstance(star, str):
+            names.append(star)
+    return names
+
+
+# ── RAG: 向量搜尋 + 加權合併 ──────────────────────
+
+def query_knowledge_rag(queries: List[str], max_total: int = 40) -> str:
+    """分層 RAG 搜尋：規則+講義用向量搜，天紀原文用關鍵字+向量混合"""
+    collection = _get_collection()
+    if not collection:
+        return _fallback_load_rules()
+
+    seen_ids = set()
+    results_pool = []
+
+    def _add_results(result, boost: float = 1.0):
+        for doc, meta, dist in zip(
+            result["documents"][0],
+            result["metadatas"][0],
+            result["distances"][0],
+        ):
+            doc_id = f"{meta.get('source', '')}_{meta.get('chunk_index', 0)}"
+            if doc_id in seen_ids:
+                continue
+            seen_ids.add(doc_id)
+            weight = meta.get("weight", 5)
+            score = (1.0 / max(dist, 0.01)) * (weight / 10.0) * boost
+            results_pool.append({
+                "doc": doc,
+                "source": meta.get("source", ""),
+                "category": meta.get("category", ""),
+                "weight": weight,
+                "distance": dist,
+                "score": score,
+            })
+
+    # ── 第一層：規則 + AI 講義（向量搜尋品質好）──
+    high_quality_cats = ["rules", "ai_lecture"]
+    for query in queries:
+        try:
+            result = collection.query(
+                query_texts=[query],
+                n_results=4,
+                where={"category": {"$in": high_quality_cats}},
+            )
+            _add_results(result, boost=1.5)
+        except Exception as e:
+            print(f"[RAG] 規則搜尋失敗: {e}")
+
+    # ── 第二層：天紀紫微斗數內容（限定 tianji 分類）──
+    tianji_cats = ["tianji_ziwei", "tianji_full", "tianji_renjian", "tianji_yijing"]
+    for query in queries[:6]:  # 前 6 個最重要的查詢
+        try:
+            result = collection.query(
+                query_texts=[query],
+                n_results=3,
+                where={"category": {"$in": tianji_cats}},
+            )
+            _add_results(result, boost=1.2)
+        except Exception as e:
+            print(f"[RAG] 天紀搜尋失敗: {e}")
+
+    # ── 第三層：健康相關（如果有疾厄宮查詢）──
+    health_queries = [q for q in queries if "疾厄" in q or "健康" in q]
+    if health_queries:
+        health_cats = ["bagang", "renji_zhenjiu", "tianji_renjian"]
+        for query in health_queries:
+            try:
+                result = collection.query(
+                    query_texts=[query],
+                    n_results=3,
+                    where={"category": {"$in": health_cats}},
+                )
+                _add_results(result, boost=1.0)
+            except Exception as e:
+                print(f"[RAG] 健康搜尋失敗: {e}")
+
+    # 按加權分數排序，取 top N
+    results_pool.sort(key=lambda x: -x["score"])
+    top_results = results_pool[:max_total]
+
+    # 過濾太短或無意義的結果
+    top_results = [r for r in top_results if len(r["doc"]) > 30]
+
+    # 組裝知識文本
+    knowledge_parts = []
+    for r in top_results:
+        knowledge_parts.append(r["doc"])
+
+    rag_text = "\n\n---\n\n".join(knowledge_parts)
+    print(f"[RAG] {len(queries)} 查詢 → {len(results_pool)} 結果 → top {len(top_results)}, {len(rag_text)} 字")
+
+    return rag_text
+
+
+def _fallback_load_rules() -> str:
+    """向量庫不可用時的降級方案：直接載入規則 JSON"""
     knowledge_texts = []
-
-    # 載入規則檔案（優先）
     rule_files = [
-        "ni_shi_principles.json",      # 倪師核心原則
-        "palace_analysis_criteria.json", # 十二宮分析要點
-        "huaji_rules.json",            # 化忌規則
-        "case_studies.json",           # 批命案例
-        "dayun_liuyuan.json",          # 大運流年批法
-        "ni_shi_quotes.json",          # 倪師原話語錄
+        "ni_shi_principles.json",
+        "palace_analysis_criteria.json",
+        "huaji_rules.json",
+        "ni_shi_quotes.json",
     ]
-
     for filename in rule_files:
         file_path = RULES_DIR / filename
         if file_path.exists():
             try:
                 content = file_path.read_text(encoding='utf-8')
                 knowledge_texts.append(f"=== {filename} ===\n{content}\n")
-            except Exception as e:
-                print(f"Error loading {filename}: {e}")
+            except Exception:
+                pass
+    return "\n".join(knowledge_texts)
 
-    # Priority files for 紫微斗數 transcript
-    priority_files = [
-        "【听课笔记】天-天机（可打印）.txt",
-        "text_天机道听课笔记.txt",
-    ]
 
-    for filename in priority_files:
-        file_path = KNOWLEDGE_DIR / filename
-        if file_path.exists():
-            try:
-                content = file_path.read_text(encoding='utf-8')
-                # Limit content size to avoid token limits
-                if len(content) > 15000:
-                    content = content[:15000] + "\n...(內容截斷)"
-                knowledge_texts.append(f"=== {filename} ===\n{content}\n")
-            except Exception as e:
-                print(f"Error loading {filename}: {e}")
-
-    return "\n".join(knowledge_texts) if knowledge_texts else ""
+def load_knowledge_for_chart(request: AIReadingRequest) -> str:
+    """根據命盤動態搜尋相關知識（RAG 主入口）"""
+    queries = extract_search_queries(request)
+    rag_knowledge = query_knowledge_rag(queries)
+    return rag_knowledge
 
 
 def format_chart_data(request: AIReadingRequest) -> str:
@@ -155,8 +323,8 @@ def format_chart_data(request: AIReadingRequest) -> str:
     return "\n".join(lines)
 
 
-def build_system_prompt(knowledge: str) -> str:
-    """Build the system prompt with 倪師 teachings."""
+def build_system_prompt(rag_knowledge: str) -> str:
+    """Build the system prompt with 倪師 teachings (RAG-powered)."""
     return f"""你是紫微斗數專家，完全遵循倪海廈老師的教學體系。
 
 ## 你的風格
@@ -179,8 +347,11 @@ def build_system_prompt(knowledge: str) -> str:
 9. 【宮有宮性】流年落入哪個宮，該宮的性質就會發動
 10.【人地勝天】命占三分之一、陽宅三分之一、人事三分之一，人+地可以化解天
 
-## 倪師教學資料
-{knowledge[:25000] if knowledge else "（講義載入中）"}
+## 與此命盤相關的倪師教學（RAG 動態檢索）
+以下資料是根據此命盤的星曜配置、四化位置、大限流年等從倪師知識庫中檢索出的最相關內容。
+請仔細閱讀並融入分析中。
+
+{rag_knowledge[:30000] if rag_knowledge else "（知識庫載入中）"}
 
 ## 批命方法（倪師版）
 1. 先定命宮的三方四正（命、財帛、官祿、遷移）
@@ -267,14 +438,14 @@ async def get_ai_reading(
     try:
         import anthropic
 
-        # Load knowledge base
-        knowledge = load_knowledge_base()
+        # RAG: 根據命盤動態搜尋相關知識
+        rag_knowledge = load_knowledge_for_chart(request)
 
         # Format chart data
         chart_data = format_chart_data(request)
 
         # Build prompts
-        system_prompt = build_system_prompt(knowledge)
+        system_prompt = build_system_prompt(rag_knowledge)
         user_prompt = build_user_prompt(chart_data)
 
         # Call Claude API
@@ -352,10 +523,12 @@ async def get_ai_reading(
 async def check_ai_status(settings: Settings = Depends(get_settings)):
     """Check if AI reading is available."""
     api_key = settings.anthropic_api_key or os.getenv("ANTHROPIC_API_KEY", "")
-    knowledge_available = KNOWLEDGE_DIR.exists() and any(KNOWLEDGE_DIR.iterdir())
+    collection = _get_collection()
+    vector_count = collection.count() if collection else 0
 
     return {
         "ai_available": bool(api_key),
-        "knowledge_available": knowledge_available,
-        "knowledge_path": str(KNOWLEDGE_DIR),
+        "rag_enabled": collection is not None,
+        "vector_count": vector_count,
+        "vectors_path": str(VECTORS_DIR),
     }
