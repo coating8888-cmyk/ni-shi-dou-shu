@@ -1336,12 +1336,11 @@ export function AnalysisPanel({ analysis, isLoading, error, originPalace, astrol
 
         // 將每個區塊轉換成 canvas
         const sectionCanvas = await html2canvas(pdfSection, {
-          scale: 2,
           useCORS: true,
           logging: false,
           backgroundColor: '#ffffff',
           width: 1000,
-        });
+        } as Parameters<typeof html2canvas>[1] & { width: number });
 
         // 計算區塊在 PDF 中的高度
         const sectionImgHeight = (sectionCanvas.height * contentWidth) / sectionCanvas.width;

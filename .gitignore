@@ -33,3 +33,4 @@ knowledge/raw/
 # Logs
 *.log
 .DS_Store
+logs/
