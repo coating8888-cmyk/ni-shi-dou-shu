@@ -338,6 +338,93 @@ export async function getAIReading(request: AIReadingRequest): Promise<AIReading
 }
 
 /**
+ * Stream AI reading via SSE, with callbacks for each stage.
+ * Falls back to non-streaming getAIReading on failure.
+ */
+export async function getAIReadingStream(
+  request: AIReadingRequest,
+  callbacks: {
+    onRagComplete?: () => void;
+    onText?: (chunk: string) => void;
+    onComplete?: (response: AIReadingResponse) => void;
+    onError?: (error: string) => void;
+  },
+): Promise<void> {
+  try {
+    const res = await fetch(`${API_BASE}/chart/ai-reading-stream`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request),
+    });
+
+    if (!res.ok || !res.body) {
+      // Fallback to non-streaming
+      const result = await getAIReading(request);
+      if (result.success) {
+        callbacks.onComplete?.(result);
+      } else {
+        callbacks.onError?.(result.error || 'API 錯誤');
+      }
+      return;
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      let currentEvent = '';
+      for (const line of lines) {
+        if (line.startsWith('event: ')) {
+          currentEvent = line.slice(7).trim();
+        } else if (line.startsWith('data: ')) {
+          const data = line.slice(6);
+          try {
+            const parsed = JSON.parse(data);
+            switch (currentEvent) {
+              case 'rag_complete':
+                callbacks.onRagComplete?.();
+                break;
+              case 'text':
+                callbacks.onText?.(parsed.text);
+                break;
+              case 'complete':
+                callbacks.onComplete?.(parsed as AIReadingResponse);
+                break;
+              case 'error':
+                callbacks.onError?.(parsed.error);
+                break;
+            }
+          } catch {
+            // ignore parse errors in stream
+          }
+          currentEvent = '';
+        }
+      }
+    }
+  } catch {
+    // Network error - fallback to non-streaming
+    try {
+      const result = await getAIReading(request);
+      if (result.success) {
+        callbacks.onComplete?.(result);
+      } else {
+        callbacks.onError?.(result.error || '網路錯誤');
+      }
+    } catch (fallbackErr) {
+      callbacks.onError?.(`網路錯誤: ${fallbackErr}`);
+    }
+  }
+}
+
+/**
  * Check if AI reading is available
  */
 export async function checkAIStatus(): Promise<{

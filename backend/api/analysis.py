@@ -5,6 +5,9 @@ from typing import Dict, List, Any, Optional
 from fastapi import APIRouter, HTTPException, Depends
 
 from backend.config import Settings, get_settings
+from backend.logger import get_logger
+
+logger = get_logger("analysis")
 from backend.models.schemas import (
     BirthDataRequest,
     AnalysisResult,
@@ -344,7 +347,7 @@ async def ai_analysis(
         return rule_based_result
     except Exception as e:
         # Log error and return rule-based result
-        print(f"AI analysis error: {e}")
+        logger.error("AI analysis error: %s", e)
         return rule_based_result
 
 

@@ -1,19 +1,52 @@
 """AI-powered chart reading using Claude API with 倪師 teachings + RAG."""
 
+import hashlib
 import os
+import time
 from pathlib import Path
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 import json
 import re
 from fastapi import APIRouter, HTTPException, Depends
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from backend.config import Settings, get_settings
+from backend.logger import get_logger
+
+logger = get_logger("ai_reading")
 
 router = APIRouter(prefix="/chart", tags=["AI Reading"])
 
 VECTORS_DIR = Path(__file__).parent.parent.parent / "knowledge" / "vectors"
 RULES_DIR = Path(__file__).parent.parent / "rules"
+
+# RAG 快取：同命盤 1 小時內不重查向量庫
+_rag_cache: Dict[str, Tuple[str, float]] = {}
+_RAG_CACHE_TTL = 3600  # 1 hour
+
+
+def _chart_hash(request: "AIReadingRequest") -> str:
+    """產生命盤的唯一 hash，用於 RAG 快取鍵值。"""
+    key_data = json.dumps({
+        "palaces": request.palaces,
+        "gender": request.gender,
+    }, sort_keys=True, ensure_ascii=False)
+    return hashlib.md5(key_data.encode()).hexdigest()
+
+
+def _get_cached_rag(cache_key: str) -> Optional[str]:
+    """取得快取的 RAG 結果，過期則清除。"""
+    if cache_key in _rag_cache:
+        result, ts = _rag_cache[cache_key]
+        if time.time() - ts < _RAG_CACHE_TTL:
+            return result
+        del _rag_cache[cache_key]
+    # 清除其他過期項目
+    expired = [k for k, (_, ts) in _rag_cache.items() if time.time() - ts >= _RAG_CACHE_TTL]
+    for k in expired:
+        del _rag_cache[k]
+    return None
 
 # 向量庫客戶端（延遲初始化）
 _chroma_client = None
@@ -29,10 +62,10 @@ def _get_collection():
         import chromadb
         _chroma_client = chromadb.PersistentClient(path=str(VECTORS_DIR))
         _chroma_collection = _chroma_client.get_collection("ni_shi_knowledge")
-        print(f"[RAG] 向量庫已載入，共 {_chroma_collection.count()} 條")
+        logger.info("向量庫已載入，共 %d 條", _chroma_collection.count())
         return _chroma_collection
     except Exception as e:
-        print(f"[RAG] 向量庫載入失敗: {e}")
+        logger.error("向量庫載入失敗: %s", e)
         return None
 
 
@@ -205,7 +238,7 @@ def query_knowledge_rag(queries: List[str], max_total: int = 40) -> str:
             )
             _add_results(result, boost=1.5)
         except Exception as e:
-            print(f"[RAG] 規則搜尋失敗: {e}")
+            logger.warning("規則搜尋失敗: %s", e)
 
     # ── 第二層：天紀紫微斗數內容（限定 tianji 分類）──
     tianji_cats = ["tianji_ziwei", "tianji_full", "tianji_renjian", "tianji_yijing"]
@@ -218,7 +251,7 @@ def query_knowledge_rag(queries: List[str], max_total: int = 40) -> str:
             )
             _add_results(result, boost=1.2)
         except Exception as e:
-            print(f"[RAG] 天紀搜尋失敗: {e}")
+            logger.warning("天紀搜尋失敗: %s", e)
 
     # ── 第三層：健康相關（如果有疾厄宮查詢）──
     health_queries = [q for q in queries if "疾厄" in q or "健康" in q]
@@ -233,7 +266,7 @@ def query_knowledge_rag(queries: List[str], max_total: int = 40) -> str:
                 )
                 _add_results(result, boost=1.0)
             except Exception as e:
-                print(f"[RAG] 健康搜尋失敗: {e}")
+                logger.warning("健康搜尋失敗: %s", e)
 
     # 按加權分數排序，取 top N
     results_pool.sort(key=lambda x: -x["score"])
@@ -248,7 +281,7 @@ def query_knowledge_rag(queries: List[str], max_total: int = 40) -> str:
         knowledge_parts.append(r["doc"])
 
     rag_text = "\n\n---\n\n".join(knowledge_parts)
-    print(f"[RAG] {len(queries)} 查詢 → {len(results_pool)} 結果 → top {len(top_results)}, {len(rag_text)} 字")
+    logger.info("%d 查詢 → %d 結果 → top %d, %d 字", len(queries), len(results_pool), len(top_results), len(rag_text))
 
     return rag_text
 
@@ -274,9 +307,18 @@ def _fallback_load_rules() -> str:
 
 
 def load_knowledge_for_chart(request: AIReadingRequest) -> str:
-    """根據命盤動態搜尋相關知識（RAG 主入口）"""
+    """根據命盤動態搜尋相關知識（RAG 主入口，含快取）"""
+    cache_key = _chart_hash(request)
+    cached = _get_cached_rag(cache_key)
+    if cached is not None:
+        logger.info("RAG cache hit (key=%s)", cache_key[:8])
+        return cached
+
     queries = extract_search_queries(request)
     rag_knowledge = query_knowledge_rag(queries)
+
+    _rag_cache[cache_key] = (rag_knowledge, time.time())
+    logger.info("RAG cache miss → stored (key=%s)", cache_key[:8])
     return rag_knowledge
 
 
@@ -523,7 +565,7 @@ async def get_ai_reading(
             if repaired:
                 try:
                     parsed = json.loads(repaired)
-                    print(f"[AI] JSON 修復成功")
+                    logger.info("JSON 修復成功")
                     return AIReadingResponse(
                         success=True,
                         overall_reading=ensure_string(parsed.get("overall_reading", "")),
@@ -543,7 +585,7 @@ async def get_ai_reading(
                 except json.JSONDecodeError:
                     pass
             # 修復也失敗，回傳原始文字到 overall_reading
-            print(f"[AI] JSON 解析與修復均失敗，fallback 到 overall_reading")
+            logger.warning("JSON 解析與修復均失敗，fallback 到 overall_reading")
             return AIReadingResponse(
                 success=True,
                 overall_reading=response_text,
@@ -561,6 +603,108 @@ async def get_ai_reading(
             success=False,
             error=f"AI 分析時發生錯誤：{str(e)}"
         )
+
+
+def _parse_ai_response(response_text: str) -> dict:
+    """Parse AI response text into structured dict. Shared by both endpoints."""
+    def ensure_string(value) -> str:
+        if isinstance(value, list):
+            return "\n".join(str(item) for item in value)
+        return str(value) if value else ""
+
+    json_match = re.search(r'```json\s*([\s\S]*?)\s*```', response_text)
+    json_str = json_match.group(1) if json_match else response_text
+
+    try:
+        parsed = json.loads(json_str)
+    except json.JSONDecodeError:
+        repaired = _repair_json(json_str)
+        if repaired:
+            try:
+                parsed = json.loads(repaired)
+                logger.info("JSON 修復成功（stream）")
+            except json.JSONDecodeError:
+                return {"success": True, "overall_reading": response_text}
+        else:
+            return {"success": True, "overall_reading": response_text}
+
+    return {
+        "success": True,
+        "overall_reading": ensure_string(parsed.get("overall_reading", "")),
+        "palace_readings": parsed.get("palace_readings", {}),
+        "best_parts": ensure_string(parsed.get("best_parts", "")),
+        "caution_parts": ensure_string(parsed.get("caution_parts", "")),
+        "origin_palace_reading": ensure_string(parsed.get("origin_palace_reading", "")),
+        "body_palace_reading": ensure_string(parsed.get("body_palace_reading", "")),
+        "sihua_reading": ensure_string(parsed.get("sihua_reading", "")),
+        "decadal_reading": ensure_string(parsed.get("decadal_reading", "")),
+        "yearly_reading": ensure_string(parsed.get("yearly_reading", "")),
+        "career_reading": ensure_string(parsed.get("career_reading", "")),
+        "relationship_reading": ensure_string(parsed.get("relationship_reading", "")),
+        "health_reading": ensure_string(parsed.get("health_reading", "")),
+        "recommendations": ensure_string(parsed.get("recommendations", "")),
+    }
+
+
+@router.post("/ai-reading-stream")
+async def get_ai_reading_stream(
+    request: AIReadingRequest,
+    settings: Settings = Depends(get_settings),
+):
+    """SSE streaming endpoint for AI chart reading."""
+
+    api_key = settings.anthropic_api_key or os.getenv("ANTHROPIC_API_KEY", "")
+    if not api_key:
+        async def error_stream():
+            yield f"event: error\ndata: {json.dumps({'error': '未設定 Anthropic API Key'})}\n\n"
+        return StreamingResponse(error_stream(), media_type="text/event-stream")
+
+    async def event_generator():
+        try:
+            import anthropic
+
+            # RAG search
+            rag_knowledge = load_knowledge_for_chart(request)
+            yield f"event: rag_complete\ndata: {json.dumps({'status': 'RAG 搜尋完成'})}\n\n"
+
+            # Build prompts
+            chart_data = format_chart_data(request)
+            system_prompt = build_system_prompt(rag_knowledge)
+            user_prompt = build_user_prompt(chart_data)
+
+            # Stream with AsyncAnthropic
+            async_client = anthropic.AsyncAnthropic(api_key=api_key)
+            full_text = ""
+
+            async with async_client.messages.stream(
+                model=settings.claude_model,
+                max_tokens=8000,
+                system=system_prompt,
+                messages=[{"role": "user", "content": user_prompt}],
+            ) as stream:
+                async for text in stream.text_stream:
+                    full_text += text
+                    # Send each text chunk
+                    yield f"event: text\ndata: {json.dumps({'text': text})}\n\n"
+
+            # Parse complete response
+            result = _parse_ai_response(full_text)
+            yield f"event: complete\ndata: {json.dumps(result)}\n\n"
+
+        except ImportError:
+            yield f"event: error\ndata: {json.dumps({'error': '未安裝 anthropic 套件'})}\n\n"
+        except Exception as e:
+            logger.error("串流 AI 分析錯誤: %s", e)
+            yield f"event: error\ndata: {json.dumps({'error': f'AI 分析錯誤：{str(e)}'})}\n\n"
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 
 @router.get("/ai-status")

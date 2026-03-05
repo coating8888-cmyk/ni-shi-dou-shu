@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.config import get_settings
+from backend.database import init_db
 from backend.api import chart, analysis, fengshui, divination, ai_reading, feedback
 
 # Get settings
@@ -34,6 +35,11 @@ app.include_router(fengshui.router)
 app.include_router(divination.router)
 app.include_router(ai_reading.router)
 app.include_router(feedback.router)
+
+
+@app.on_event("startup")
+async def startup():
+    init_db()
 
 
 @app.get("/")
